@@ -4,6 +4,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from django.views.decorators.csrf import csrf_exempt
+
+from graphene_django.views import GraphQLView
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -21,6 +24,7 @@ urlpatterns = [
     ),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

@@ -67,10 +67,12 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'graphene_django',
 ]
 LOCAL_APPS = [
     'poe_browse.users.apps.UsersAppConfig',
     # Your stuff: custom apps go here
+    'item_builder'
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -248,3 +250,6 @@ SOCIALACCOUNT_ADAPTER = 'poe_browse.users.adapters.SocialAccountAdapter'
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+GRAPHENE = {
+    'SCHEMA': 'config.schema.schema'
+}
