@@ -1,0 +1,26 @@
+query BaseItem($name: String) {
+  baseItem(name: $name) {
+    name
+    icon
+    frame
+    id
+    type
+    category
+    group
+    mods {
+      nameOrig
+      ranges
+      name
+      values
+      isVariable
+    }
+    size {
+      width
+      height
+    }
+    descriptions {
+      description
+      flavourText
+    }
+  }
+}

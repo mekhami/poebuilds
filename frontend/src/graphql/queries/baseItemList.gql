@@ -1,0 +1,6 @@
+query BaseItemList($name: String!) {
+  baseItemList(name: $name) {
+    name
+    icon
+  }
+}
