@@ -1,14 +1,16 @@
 <template>
-  <section 
+  <section
     class="result-html"
     @mouseover="hovering = true"
     @mouseleave="hovering = false">
     <div class="overlay" v-if="hovering">
       <div class="buttons">
         <button @click="$emit('editing')">Edit</button>
+        <button @click="$emit('addChild')">Add Child</button>
       </div>
     </div>
-    <vue-markdown class="editor" :source="sectionText"></vue-markdown>
+    <h1>{{ section.title }}</h1>
+    <vue-markdown class="editor" :source="section.content"></vue-markdown>
   </section>
 </template>
 
@@ -17,7 +19,7 @@ import VueMarkdown from 'vue-markdown'
 
 export default {
   props: {
-    sectionText: String
+    section: Object
   },
   components: { VueMarkdown },
   data () {
@@ -34,8 +36,6 @@ export default {
 <style lang="scss" scoped>
 .result-html {
   border: 1px solid #ccc;
-  height: 100%;
-  width: 100%;
   position: relative;
 }
 .overlay {
@@ -53,6 +53,5 @@ export default {
 .editor {
   height: 100%;
   width: 100%;
-  position: absolute;
 }
 </style>

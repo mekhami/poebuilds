@@ -1,13 +1,22 @@
 <template>
   <div class="section-editor">
-    <section-editor 
+    <section-editor
        v-if="editing"
-       :sectionText="sectionText"
-       @input="sectionText = $event; editing=false"/>
+       :section="section"
+       @input="updateSection($event)"/>
     <section-display
       v-else
       @editing="editing = true"
-      :sectionText="sectionText"/>
+      @addChild="$emit('addChild', section)"
+      :section="section"/>
+    <div class="children">
+      <editable-section
+        v-for="section in section.children"
+        :section="section"
+        :key="`${section.title}-${section.order}`"
+        @update="updateSection($event)"
+        @addChild="addChild(section)"></editable-section>
+    </div>
   </div>
 </template>
 
@@ -16,26 +25,34 @@ import SectionDisplay from '@/components/SectionDisplay'
 import SectionEditor from '@/components/SectionEditor'
 
 export default {
-  props: [],
+  name: 'editable-section',
+  props: {
+    section: Object
+  },
+  methods: {
+    updateSection (section) {
+      this.editing = false
+      this.$emit('input', section)
+    }
+  },
   components: { SectionEditor, SectionDisplay },
   data () {
     return {
-      sectionText: '# Hello World',
-      editing: true
+      editing: false
     }
-  },
-  methods: {
-
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .section-editor {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  height: 300px;
   width: 400px;
+  margin: 25px 0;
+  input {
+    width: 100%;
+  }
+}
+.children {
+  margin-left: 50px;
 }
 </style>

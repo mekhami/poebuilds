@@ -1,20 +1,32 @@
 <template>
   <div style="height: 100%; width: 100%;">
-    <textarea 
-      v-model="inputText" 
+    <input type="text" v-model="inputTitle"/>
+    <textarea
+      v-model="inputContent"
       placeholder="Input your Markdown Here"></textarea>
-    <button @click="$emit('input', inputText)">Save</button>
+    <button @click="saveSection">Save</button>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    sectionText: String
+    section: Object
+  },
+  methods: {
+    saveSection () {
+      let updatedSection = {
+        title: this.inputTitle,
+        content: this.inputContent,
+        order: this.section.order
+      }
+      this.$emit('input', updatedSection)
+    }
   },
   data () {
     return {
-      inputText: this.sectionText
+      inputContent: this.section.content,
+      inputTitle: this.section.title
     }
   }
 }
@@ -22,7 +34,7 @@ export default {
 
 <style lang="scss" scoped>
 textarea {
-  height: 100%;
+  min-height: 300px;
   width: 100%;
 }
 </style>
