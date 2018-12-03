@@ -56,7 +56,7 @@ class BaseItem(graphene.ObjectType):
             uniques = json.load(file)
         found = next((d for (index, d) in enumerate(uniques['uniques']) if d['name'] == self.name), None)
         if not found:
-            raise GraphQLError('A unique item was not found by that name. Only unique item mods can be displayed at this time.')
+            return []
         return [ItemModMapping(**mod) for mod in found['mods']]
 
 
