@@ -18,7 +18,7 @@ export default {
       let updatedSection = {
         title: this.inputTitle,
         content: this.inputContent,
-        order: this.section.order
+        path: this.section.path
       }
       this.$emit('input', updatedSection)
     }

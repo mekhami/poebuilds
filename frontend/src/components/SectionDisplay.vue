@@ -6,7 +6,7 @@
     <div class="overlay" v-if="hovering">
       <div class="buttons">
         <button @click="$emit('editing')">Edit</button>
-        <button @click="$emit('addChild')">Add Child</button>
+        <button v-if="allowChildren" @click="$emit('addChild')">Add Child</button>
       </div>
     </div>
     <h1>{{ section.title }}</h1>
@@ -19,7 +19,11 @@ import VueMarkdown from 'vue-markdown'
 
 export default {
   props: {
-    section: Object
+    section: Object,
+    allowChildren: {
+      type: Boolean,
+      default: false
+    }
   },
   components: { VueMarkdown },
   data () {

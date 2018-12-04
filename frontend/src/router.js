@@ -16,16 +16,33 @@ export default new Router({
       component: Home
     },
     {
-      path: '/builder',
-      name: 'builder',
-      component: Builder
+      path: '/guides/builder',
+      component: Builder,
+      name: 'guide-builder'
+    },
+    {
+      path: '/guides/detail/:slug',
+      component: HelloWorld, // TODO: Guide Detail Component
+      name: 'guide-detail'
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: HelloWorld // TODO: Search Page Component
+    },
+    {
+      path: '/search-result',
+      name: 'search-result',
+      component: HelloWorld // TODO: Search Result Component
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: HelloWorld // TODO: Login Page Component
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: HelloWorld
     }
   ]

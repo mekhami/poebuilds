@@ -7,6 +7,7 @@
     <section-display
       v-else
       @editing="editing = true"
+      :allowChildren="allowChildren"
       @addChild="$emit('addChild', section)"
       :section="section"/>
     <div class="children">
@@ -14,8 +15,8 @@
         v-for="section in section.children"
         :section="section"
         :key="`${section.title}-${section.order}`"
-        @update="updateSection($event)"
-        @addChild="addChild(section)"></editable-section>
+        :allowChildren="false"
+        @input="$emit('input', $event)"></editable-section>
     </div>
   </div>
 </template>
@@ -27,7 +28,11 @@ import SectionEditor from '@/components/SectionEditor'
 export default {
   name: 'editable-section',
   props: {
-    section: Object
+    section: Object,
+    allowChildren: {
+      type: Boolean,
+      default: true
+    }
   },
   methods: {
     updateSection (section) {
@@ -46,7 +51,7 @@ export default {
 
 <style lang="scss" scoped>
 .section-editor {
-  width: 400px;
+  width: 90%;
   margin: 25px 0;
   input {
     width: 100%;
