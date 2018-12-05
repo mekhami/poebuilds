@@ -10,12 +10,16 @@
       </div>
     </div>
     <h1>{{ section.title }}</h1>
-    <vue-markdown class="editor" :source="section.content"></vue-markdown>
+    <custom-markdown
+      class="editor" 
+      :itemMap="itemMap"
+      :source="section.content"></custom-markdown>
   </section>
 </template>
 
 <script>
-import VueMarkdown from 'vue-markdown'
+import CustomMarkdown from '@/components/CustomMarkdown'
+import testData from '@/testData.json'
 
 export default {
   props: {
@@ -25,14 +29,22 @@ export default {
       default: false
     }
   },
-  components: { VueMarkdown },
+  components: { CustomMarkdown },
   data () {
     return {
-      hovering: false
+      hovering: false,
+      itemMap: [
+        testData
+      ]
     }
   },
   methods: {
-
+    postrender (outhtml) {
+      return outhtml.replace(/\[\[(.*)\]\]/, (match, p1) => { 
+        let formatted = `<test :info="{ value: '${p1}' }"></test>`
+        return formatted
+      })
+    }
   }
 }
 </script>
