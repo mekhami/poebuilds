@@ -1,9 +1,11 @@
 <template>
   <div style="height: 100%; width: 100%;">
     <input type="text" v-model="inputTitle"/>
-    <textarea
-      v-model="inputContent"
-      placeholder="Input your Markdown Here"></textarea>
+    <drop @drop="handleDrop">
+      <textarea
+        v-model="inputContent"
+        placeholder="Input your Markdown Here"></textarea>
+    </drop>
     <button @click="saveSection">Save</button>
   </div>
 </template>
@@ -14,6 +16,10 @@ export default {
     section: Object
   },
   methods: {
+    handleDrop (data, event) {
+      this.inputContent += '\n'
+      this.inputContent += data
+    },
     saveSection () {
       let updatedSection = {
         title: this.inputTitle,

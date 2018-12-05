@@ -6,12 +6,13 @@
     <div class="overlay" v-if="hovering">
       <div class="buttons">
         <button @click="$emit('editing')">Edit</button>
+        <button @click="$emit('remove', section)">Remove</button>
         <button v-if="allowChildren" @click="$emit('addChild')">Add Child</button>
       </div>
     </div>
     <h1>{{ section.title }}</h1>
     <custom-markdown
-      class="editor" 
+      class="editor"
       :itemMap="itemMap"
       :source="section.content"></custom-markdown>
   </section>
@@ -19,11 +20,11 @@
 
 <script>
 import CustomMarkdown from '@/components/CustomMarkdown'
-import testData from '@/testData.json'
 
 export default {
   props: {
     section: Object,
+    itemMap: Object,
     allowChildren: {
       type: Boolean,
       default: false
@@ -32,15 +33,12 @@ export default {
   components: { CustomMarkdown },
   data () {
     return {
-      hovering: false,
-      itemMap: [
-        testData
-      ]
+      hovering: false
     }
   },
   methods: {
     postrender (outhtml) {
-      return outhtml.replace(/\[\[(.*)\]\]/, (match, p1) => { 
+      return outhtml.replace(/\[\[(.*)\]\]/, (match, p1) => {
         let formatted = `<test :info="{ value: '${p1}' }"></test>`
         return formatted
       })

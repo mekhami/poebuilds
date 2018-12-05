@@ -1,7 +1,7 @@
 <template>
   <div class="builder">
     <div class="input-wrapper">
-      <input type="text" v-model="searchField" autofocus/>
+      <input type="text" v-model="searchField" autofocus placeholder="Search for an Item..."/>
       <section v-if="searchField && foundItems.length">
         <div v-if="$apollo.loading">Loading...</div>
         <div v-for="item in foundItems.slice(0, 5)" :key="item.name">
@@ -9,11 +9,6 @@
         </div>
       </section>
     </div>
-    <section id="selected-item" v-if="selectedFullItem">
-      <div>
-        <rack-item :item="rackItemFromSelected"/>
-      </div>
-    </section>
   </div>
 </template>
 
@@ -69,8 +64,8 @@ export default {
       return doc.documentElement.textContent.split('<br />')
     },
     selectItem (item) {
-      this.selectedItem = item
       this.searchField = ''
+      this.$emit('selectItem', item)
     }
   },
   data () {
@@ -86,7 +81,7 @@ export default {
 <style lang="scss">
 input {
   height: 40px;
-  width: 400px;
+  width: 300px;
   padding: 10px 10px;
   font-size: 28px;
 }

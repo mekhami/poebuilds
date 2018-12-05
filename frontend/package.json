@@ -10,10 +10,14 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "lodash": "^4.17.11",
     "poe-item-rack": "^0.1.3",
     "vue": "^2.5.17",
     "vue-apollo": "^3.0.0-beta.11",
-    "vue-router": "^3.0.1"
+    "vue-drag-drop": "^1.1.4",
+    "vue-markdown": "^2.2.4",
+    "vue-router": "^3.0.1",
+    "vuedraggable": "^2.17.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",
@@ -26,6 +30,7 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "eslint": "^5.8.0",
+    "eslint-plugin-cypress": "^2.1.2",
     "eslint-plugin-vue": "^5.0.0-0",
     "graphql-tag": "^2.9.0",
     "node-sass": "^4.9.0",

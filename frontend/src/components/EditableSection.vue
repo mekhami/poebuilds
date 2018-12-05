@@ -6,17 +6,21 @@
        @input="updateSection($event)"/>
     <section-display
       v-else
-      @editing="editing = true"
       :allowChildren="allowChildren"
+      :section="section"
+      :itemMap="itemMap"
+      @editing="editing = true"
       @addChild="$emit('addChild', section)"
-      :section="section"/>
+      @remove="$emit('remove', $event)"/>
     <div class="children">
       <editable-section
         v-for="section in section.children"
         :section="section"
-        :key="`${section.title}-${section.order}`"
+        :key="`${section.title}-${section.path}`"
         :allowChildren="false"
-        @input="$emit('input', $event)"></editable-section>
+        :itemMap="itemMap"
+        @input="$emit('input', $event)"
+        @remove="$emit('remove', $event)"/>
     </div>
   </div>
 </template>
@@ -29,6 +33,7 @@ export default {
   name: 'editable-section',
   props: {
     section: Object,
+    itemMap: Object,
     allowChildren: {
       type: Boolean,
       default: true

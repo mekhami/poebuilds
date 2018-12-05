@@ -28,4 +28,7 @@
 * {
   box-sizing: border-box;
 }
+.rack-item {
+  display: inline-block;
+}
 </style>

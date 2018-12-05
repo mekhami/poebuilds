@@ -12,33 +12,34 @@ import katex from 'markdown-it-katex'
 import tasklists from 'markdown-it-task-lists'
 import Vue from 'vue/dist/vue.js'
 import { RackItem, RackItemDetails, RackItemIcon } from 'poe-item-rack'
+import { escape } from 'lodash'
 
 export default {
   md: new markdownIt(),
 
   template: '<div><slot></slot></div>',
 
-  data() {
+  data () {
     return {
-      sourceData: this.source,
+      sourceData: this.source
     }
   },
 
   props: {
     itemMap: {
-      type: Array
+      type: Object
     },
     watches: {
       type: Array,
-      default: () => ['source', 'show', 'toc'],
+      default: () => ['source', 'show', 'toc']
     },
     source: {
       type: String,
-      default: ``,
+      default: ``
     },
     show: {
       type: Boolean,
-      default: true,
+      default: true
     },
     highlight: {
       type: Boolean,
@@ -46,39 +47,39 @@ export default {
     },
     html: {
       type: Boolean,
-      default: true,
+      default: true
     },
     xhtmlOut: {
       type: Boolean,
-      default: true,
+      default: true
     },
     breaks: {
       type: Boolean,
-      default: true,
+      default: true
     },
     linkify: {
       type: Boolean,
-      default: true,
+      default: true
     },
     emoji: {
       type: Boolean,
-      default: true,
+      default: true
     },
     typographer: {
       type: Boolean,
-      default: true,
+      default: true
     },
     langPrefix: {
       type: String,
-      default: 'language-',
+      default: 'language-'
     },
     quotes: {
       type: String,
-      default: '“”‘’',
+      default: '“”‘’'
     },
     tableClass: {
       type: String,
-      default: 'table',
+      default: 'table'
     },
     taskLists: {
       type: Boolean,
@@ -86,41 +87,41 @@ export default {
     },
     toc: {
       type: Boolean,
-      default: false,
+      default: false
     },
     tocId: {
-      type: String,
+      type: String
     },
     tocClass: {
       type: String,
-      default: 'table-of-contents',
+      default: 'table-of-contents'
     },
     tocFirstLevel: {
       type: Number,
-      default: 2,
+      default: 2
     },
     tocLastLevel: {
-      type: Number,
+      type: Number
     },
     tocAnchorLink: {
       type: Boolean,
-      default: true,
+      default: true
     },
     tocAnchorClass: {
       type: String,
-      default: 'toc-anchor',
+      default: 'toc-anchor'
     },
     tocAnchorLinkSymbol: {
       type: String,
-      default: '#',
+      default: '#'
     },
     tocAnchorLinkSpace: {
       type: Boolean,
-      default: true,
+      default: true
     },
     tocAnchorLinkClass: {
       type: String,
-      default: 'toc-anchor-link',
+      default: 'toc-anchor-link'
     },
     anchorAttributes: {
       type: Object,
@@ -137,21 +138,21 @@ export default {
   },
   methods: {
     parseShortcodes (template, itemMap) {
-      let replacer = (match, shortCode, itemIndex) => {
-        const foundItem = JSON.stringify(itemMap[itemIndex])
-        return `<rack-item :item='${foundItem}'></rack-item>`
+      const replacer = (match, shortCode, itemIndex) => {
+        const index = itemIndex.replace(/[\u2018\u2019]/g, "'")
+        const foundItem = JSON.stringify(itemMap[index])
+        return `<rack-item :item="${escape(foundItem)}"></rack-item>`
       }
-      let parsed = template.replace(/\[(BuildItem:(\d))\]/, replacer)
-      return parsed
+      return template.replace(/(\[BuildItem:([^\]]+)\])/g, replacer)
     }
   },
   computed: {
-    tocLastLevelComputed() {
+    tocLastLevelComputed () {
       return this.tocLastLevel > this.tocFirstLevel ? this.tocLastLevel : this.tocFirstLevel + 1
     }
   },
 
-  render(createElement) {
+  render (createElement) {
     this.md = new markdownIt()
       .use(subscript)
       .use(superscript)
@@ -160,7 +161,7 @@ export default {
       .use(abbreviation)
       .use(insert)
       .use(mark)
-      .use(katex, { "throwOnError": false, "errorColor": " #cc0000" })
+      .use(katex, { 'throwOnError': false, 'errorColor': ' #cc0000' })
       .use(tasklists, { enabled: this.taskLists })
 
     if (this.emoji) {
@@ -174,7 +175,7 @@ export default {
       linkify: this.linkify,
       typographer: this.typographer,
       langPrefix: this.langPrefix,
-      quotes: this.quotes,
+      quotes: this.quotes
     })
     this.md.renderer.rules.table_open = () => `<table class="${this.tableClass}">\n`
     let defaultLinkRenderer = this.md.renderer.rules.link_open ||
@@ -212,15 +213,15 @@ export default {
 
             this.$emit('toc-rendered', tocHtml)
           }
-        },
+        }
       })
     }
 
-    let outHtml = this.show ?
-      this.md.render(
+    let outHtml = this.show
+      ? this.md.render(
         this.prerender(this.sourceData)
       ) : ''
-    outHtml = this.postrender(outHtml);
+    outHtml = this.postrender(outHtml)
 
     this.$emit('rendered', outHtml)
 
@@ -244,7 +245,7 @@ export default {
     )
   },
 
-  beforeMount() {
+  beforeMount () {
     if (this.$slots.default) {
       this.sourceData = ''
       for (let slot of this.$slots.default) {
@@ -262,5 +263,5 @@ export default {
         this.$forceUpdate()
       })
     })
-  },
+  }
 }
