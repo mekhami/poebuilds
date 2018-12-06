@@ -69,11 +69,13 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'graphene_django',
     'corsheaders',
+    'taggit',
 ]
 LOCAL_APPS = [
     'poe_browse.users.apps.UsersAppConfig',
     # Your stuff: custom apps go here
-    'item_builder'
+    'item_builder',
+    'guides'
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -258,3 +260,5 @@ SOCIALACCOUNT_ADAPTER = 'poe_browse.users.adapters.SocialAccountAdapter'
 GRAPHENE = {
     'SCHEMA': 'config.schema.schema'
 }
+
+TAGGIT_CASE_INSENSITIVE = True
