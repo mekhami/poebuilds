@@ -3,6 +3,7 @@ from enum import Enum
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.utils import timezone
 
 from taggit.managers import TaggableManager
 
@@ -58,10 +59,12 @@ Ascendancies = (
 class Guide(models.Model):
     LOW_QUALITY_THRESHOLD = -10
 
-    ascendancy = models.CharField(max_length=20, choices=Ascendancies)
+    ascendancy = models.CharField(max_length=20, choices=Ascendancies, null=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    character_class = models.CharField(max_length=15, choices=[(tag, tag.value) for tag in CharacterChoices])
+    character_class = models.CharField(max_length=15, choices=[(tag, tag.value) for tag in CharacterChoices], null=True)
     content = JSONField()
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
     items = JSONField()
     patch_version = models.CharField(max_length=10)
     primary_skill = models.CharField(max_length=100)
@@ -85,3 +88,9 @@ class Guide(models.Model):
 
     def is_visible(self):
         return self.score >= LOW_QUALITY_THRESHOLD
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created_at = timezone.now()
+        self.updated_at = timezone.now()
+        return super().save(*args, **kwargs)

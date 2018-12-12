@@ -7,8 +7,10 @@ from django.views import defaults as default_views
 from django.views.decorators.csrf import csrf_exempt
 
 from graphene_django.views import GraphQLView
+from .views import get_csrf_token, login_view, logout_view
 
 urlpatterns = [
+    path("csrf_get/", get_csrf_token),
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path(
         "about/",
@@ -22,7 +24,8 @@ urlpatterns = [
         "users/",
         include("poe_browse.users.urls", namespace="users"),
     ),
-    path("accounts/", include("allauth.urls")),
+    path("accounts/login/", login_view),
+    path("accounts/logout/", logout_view),
     # Your stuff: custom urls includes go here
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
 ] + static(
