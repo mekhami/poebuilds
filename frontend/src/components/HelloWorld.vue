@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <rack-item :item="item"/>
   </div>
 </template>

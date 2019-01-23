@@ -1,0 +1,16 @@
+@charset "utf-8";
+@import "./_variables.scss";
+@import "../fonts/stylesheet.css";
+
+$family-sans-serif: "fontin_sansregular";
+
+$navbar-background-color: $primary-red;
+$navbar-height: 4rem;
+$navbar-padding-vertical: 1.5rem;
+$navbar-padding-horizontal: 2.5rem;
+$navbar-item-color: white;
+$navbar-item-hover-color: $primary-gold;
+$navbar-item-active-color: $primary-gold;
+$navbar-tab-hover-border-bottom-color: $primary-gold;
+
+@import "~bulma/bulma";

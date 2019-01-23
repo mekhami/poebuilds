@@ -1,49 +1,59 @@
 <template>
   <div id="app">
-    <div id="supernav">
-      <div class="left-pad">
-        <router-link to="/login">Login</router-link> |
-        <router-link to="/about"> About</router-link> |
-        <router-link to="/about"> Contact</router-link>
-      </div>
-    </div>
-    <div id="nav">
-      <div class="hero">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
         <router-link to="/" class="hero-link">Path of Guides</router-link>
-      </div>
-      <div class="links">
-        <router-link to="/guides/builder">
+        <router-link class="navbar-item is-tab" to="/guides/builder">
           <div class="link-card">
-            <span>Create Guide</span>
+            <span class="has-text-weight-bold">Create Guide</span>
             <span class="subtext">The Guide Builder</span>
           </div>
         </router-link>
-        <router-link to="/guides">
+        <router-link class="navbar-item is-tab" to="/guides">
           <div class="link-card">
-            <span>Browse Guides</span>
+            <span class="has-text-weight-bold">Browse Guides</span>
             <span class="subtext">PoE Character Guides</span>
           </div>
         </router-link>
-        <router-link to="/stats">
-          <div class="link-card">
-            <span>Build Stats</span>
-            <span class="subtext">Explore the Meta</span>
-          </div>
-        </router-link>
-        <router-link to="/search">
-          <div class="link-card">
-            <span><i class="material-icons">search</i> Search</span>
-            <span class="subtext">Find a Guide</span>
-          </div>
-        </router-link>
+        <a @click="navMenuOpened = !navMenuOpened" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
       </div>
+      <div class="navbar-menu" :class="{ 'is-active': navMenuOpened }">
+        <div class="navbar-start">
+          <router-link class="navbar-item is-tab" to="/stats">
+            <div class="link-card">
+              <span class="has-text-weight-bold">Build Stats</span>
+              <span class="subtext">Explore the Meta</span>
+            </div>
+          </router-link>
+          <router-link class="navbar-item is-tab" to="/search">
+            <div class="link-card">
+              <span class="has-text-weight-bold"><i class="material-icons">search</i> Search</span>
+              <span class="subtext">Find a Guide</span>
+            </div>
+          </router-link>
+        </div>
+        <div class="navbar-end">
+
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <router-view/>
     </div>
-    <router-view/>
   </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      navMenuOpened: false
+    }
+  },
   mounted () {
     fetch('csrf_get/', {
       credentials: 'include'
@@ -90,71 +100,38 @@ a {
     color: $primary-red;
   }
 }
-
+html {
+  height: 100%;
+}
 body {
-  font-family: 'Open Sans', sans-serif;
+  height: 100%;
   background-color: $black;
   margin: 0;
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: white;
 }
-.left-pad {
-  margin-left: 18px;
-}
-#supernav {
-  text-align: right;
-  color: white;
-  padding: 6px 10px;
-  background-color: $dark-red;
-}
-#nav {
-  padding: 0 30px;
-  .links {
-    display: inline-block;
+.link-card {
+  i {
+    font-size: 20px;
+    position: relative;
+    top: 5px;
+    left: 4px;
   }
-  .hero {
-    display: inline-block;
-    font-size: 28px;
-    font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  padding: 20;
+  &:hover {
+    background-color: $primary-red;
   }
-  .link-card {
-    i {
-      font-size: 24px;
-      position: relative;
-      top: 4px;
-      left: 4px;
-    }
-    text-align: center;
-    display: inline-block;
-    padding: 28px;
-    border-bottom: 3px solid transparent;
-    &:hover {
-      background-color: $primary-red;
-    }
-    span {
-      display: block;
-      &.subtext {
-        color: #e5e5e5;
-        font-size: 14px;
-        font-weight: normal;
-      }
-    }
-  }
-  background-color: $secondary-red;
-  font-size: 24px;
-  border-bottom: 14px solid $primary-red;
-  a {
-    padding-bottom: 22px;
-    font-weight: bold;
-    color: white;
-    &.router-link-exact-active  {
-      &:not(.hero-link) {
-        border-bottom: 3px solid $primary-red;
-      }
+  span {
+    display: block;
+    &.subtext {
+      color: #e5e5e5;
+      font-size: 14px;
+      font-weight: normal;
     }
   }
 }

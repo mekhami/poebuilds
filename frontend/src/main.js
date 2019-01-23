@@ -5,8 +5,7 @@ import { RackItem, RackItemDetails, RackItemIcon } from 'poe-item-rack'
 import '../node_modules/poe-item-rack/dist/poeRack.css'
 import { createProvider } from './vue-apollo'
 import { Drag, Drop } from 'vue-drag-drop'
-import Buefy from 'buefy'
-import './assets/scss/_variables.scss'
+import './assets/scss/main.scss'
 
 Vue.config.productionTip = false
 Vue.component('rack-item', RackItem)
@@ -14,8 +13,6 @@ Vue.component('rack-item-details', RackItemDetails)
 Vue.component('rack-item-icon', RackItemIcon)
 Vue.component('drop', Drop)
 Vue.component('drag', Drag)
-
-Vue.use(Buefy)
 
 new Vue({
   router,
